@@ -1,15 +1,15 @@
-
+// ToDoForm.jsx
 
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 
-const ToDoForm = ({ onAddTask }) => {
-  const [taskText, setTaskText] = useState('');
+function ToDoForm({ onAddTask }) {
+  const [newTask, setNewTask] = useState('');
 
   const handleAddTask = () => {
-    if (taskText) {
-      onAddTask(taskText);
-      setTaskText('');
+    if (newTask.trim() !== '') {
+      onAddTask(newTask);
+      setNewTask('');
     }
   };
 
@@ -18,13 +18,13 @@ const ToDoForm = ({ onAddTask }) => {
       <TextInput
         style={styles.input}
         placeholder="Add a new task..."
-        value={taskText}
-        onChangeText={(text) => setTaskText(text)}
+        value={newTask}
+        onChangeText={(text) => setNewTask(text)}
       />
       <Button title="Add" onPress={handleAddTask} />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   form: {

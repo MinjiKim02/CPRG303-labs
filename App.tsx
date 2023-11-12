@@ -18,43 +18,75 @@ import {
 } from 'react-native';
 
 import ToDoForm from './ToDoForm';
+import ToDoList from './ToDoList';
+
 
 function App() {
-  const [tasks, setTasks] = useState<string[]>([]);
+  // const [tasks, setTasks] = useState<string[]>([]);
+  const [tasks, setTasks] = useState([
+    'Do laundry',
+    'Go to gym',
+    'Walk dog'
+  ]);
 
 
-  const handleAddTask = (taskText: string) => {
-    if (taskText) {
-      setTasks([...tasks, taskText]);
+  const [newTask, setNewTask] = useState('');
+
+  const handleAddTask = () => {
+    if (newTask.trim() !== '') {
+      setTasks([...tasks, newTask]);
+      setNewTask(''); 
     }
   };
 
   return (
     <SafeAreaView>
       <ScrollView>
-        <Pressable>
-          <View style={[styles.task, styles.completed]}>
-            <Text style={styles.taskText}>Do laundry</Text>
-          </View>
-        </Pressable>
-        <Pressable>
-          <View style={[styles.task]}>
-            <Text style={styles.taskText}>Go to gym</Text>
-          </View>
-        </Pressable>
-        <Pressable>
-          <View style={[styles.task, styles.completed]}>
-            <Text style={styles.taskText}>Walk dog</Text>
-          </View>
-        </Pressable>
+        <ToDoList tasks={tasks} />
       </ScrollView>
       <View style={styles.form}>
-      <ToDoForm onAddTask={handleAddTask} />
-
+        <TextInput
+          style={styles.input}
+          placeholder="Add a new task..."
+          value={newTask}
+          onChangeText={(text) => setNewTask(text)}
+        />
+        <Button title="Add" onPress={handleAddTask} />
       </View>
     </SafeAreaView>
   );
 }
+
+
+//   return (
+//     <SafeAreaView>
+//       <ScrollView>
+//         <Pressable>
+//           <View style={[styles.task, styles.completed]}>
+//             <Text style={styles.taskText}>Do laundry</Text>
+//           </View>
+//         </Pressable>
+//         <Pressable>
+//           <View style={[styles.task]}>
+//             <Text style={styles.taskText}>Go to gym</Text>
+//           </View>
+//         </Pressable>
+//         <Pressable>
+//           <View style={[styles.task, styles.completed]}>
+//             <Text style={styles.taskText}>Walk dog</Text>
+//           </View>
+//         </Pressable>
+//       </ScrollView>
+//       <View style={styles.form}>
+//       <TextInput
+//           style={styles.input}
+//           placeholder="Add a new task..."
+//         />
+//         <Button title="Add" />
+//       </View>
+//     </SafeAreaView>
+//   );
+// }
 
 const styles = StyleSheet.create({
   task: {
