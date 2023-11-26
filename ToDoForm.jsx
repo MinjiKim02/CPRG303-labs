@@ -13,6 +13,8 @@ function ToDoForm({ onAddTask }) {
     }
   };
 
+
+
   return (
     <View style={styles.form}>
       <TextInput

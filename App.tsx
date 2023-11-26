@@ -39,11 +39,20 @@ function App() {
     }
   };
 
+  const addTask = (taskText: string) => {
+    setTasks(prevTasks => [...prevTasks, taskText]);
+  };
+  
+
+  
+
+
   return (
     <SafeAreaView>
       <ScrollView>
         <ToDoList tasks={tasks} />
       </ScrollView>
+      <ToDoForm onAddTask={addTask} />
       <View style={styles.form}>
         <TextInput
           style={styles.input}
