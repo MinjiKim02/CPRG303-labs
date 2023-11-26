@@ -17,54 +17,110 @@ import {
   Button
 } from 'react-native';
 
-import ToDoForm from './ToDoForm';
-import ToDoList from './ToDoList';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import HomeScreen from './screens/HomeScreen';
+import AboutScreen from './screens/AboutScreen';
+
+// import ToDoForm from './components/ToDoForm';
+// import ToDoList from './components/ToDoList';
+
 
 
 function App() {
-  // const [tasks, setTasks] = useState<string[]>([]);
-  const [tasks, setTasks] = useState([
-    'Do laundry',
-    'Go to gym',
-    'Walk dog'
-  ]);
-
-
+  const [tasks, setTasks] = useState<string[]>([]);
   const [newTask, setNewTask] = useState('');
 
   const handleAddTask = () => {
     if (newTask.trim() !== '') {
       setTasks([...tasks, newTask]);
-      setNewTask(''); 
+      setNewTask('');
     }
   };
 
   const addTask = (taskText: string) => {
-    setTasks(prevTasks => [...prevTasks, taskText]);
+    setTasks((prevTasks) => [...prevTasks, taskText]);
   };
-  
 
-  
+  const Stack = createStackNavigator();
+
 
 
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <ToDoList tasks={tasks} />
-      </ScrollView>
-      <ToDoForm onAddTask={addTask} />
-      <View style={styles.form}>
-        <TextInput
-          style={styles.input}
-          placeholder="Add a new task..."
-          value={newTask}
-          onChangeText={(text) => setNewTask(text)}
-        />
-        <Button title="Add" onPress={handleAddTask} />
-      </View>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        initialParams={{
+          tasks: tasks,
+          addTask: addTask,
+          newTask: newTask,
+          setNewTask: setNewTask,
+          handleAddTask: handleAddTask,
+        }}
+      />
+        <Stack.Screen name="About" component={AboutScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    
   );
 }
+
+
+
+// function App() {
+//   // const [tasks, setTasks] = useState<string[]>([]);
+//   const [tasks, setTasks] = useState([
+//     'Do laundry',
+//     'Go to gym',
+//     'Walk dog'
+//   ]);
+
+
+//   const [newTask, setNewTask] = useState('');
+
+//   const handleAddTask = () => {
+//     if (newTask.trim() !== '') {
+//       setTasks([...tasks, newTask]);
+//       setNewTask(''); 
+//     }
+//   };
+
+//   const addTask = (taskText: string) => {
+//     setTasks(prevTasks => [...prevTasks, taskText]);
+//   };
+  
+
+  
+
+
+//   return (
+//     <SafeAreaView>
+//       <ScrollView>
+//         <ToDoList tasks={tasks} />
+//       </ScrollView>
+//       <ToDoForm onAddTask={addTask} />
+//       <View style={styles.form}>
+//         <TextInput
+//           style={styles.input}
+//           placeholder="Add a new task..."
+//           value={newTask}
+//           onChangeText={(text) => setNewTask(text)}
+//         />
+//         <Button title="Add" onPress={handleAddTask} />
+//       </View>
+//       <NavigationContainer>
+//         <Stack.Navigator>
+//           <Stack.Screen name="Home" component={HomeScreen} />
+//           <Stack.Screen name="About" component={AboutScreen} />
+//         </Stack.Navigator>
+//       </NavigationContainer>
+//     </SafeAreaView>
+    
+//   );
+// }
 
 
 //   return (
